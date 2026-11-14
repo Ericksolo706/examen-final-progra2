@@ -1,6 +1,4 @@
-Alumno: Erick Efrain Solorzano Jimenez
-Carne: 0907-25-79532
-Curso: Programacion II
+
 
 (a) Que entendi del problema y que tablas/modelos planee
 
