@@ -1,0 +1,24 @@
+Alumno: Erick Efrain Solorzano Jimenez
+Carne: 0907-25-79532
+Curso: Programacion II
+
+Prompt 1:
+Ayudame a desarrollar una aplicacion en React Native con Expo Router y Supabase para un Sistema de Gestion de Equipos de Laboratorio en una universidad. Necesito manejar inicio de sesion con opcion de registrarse y dos tipos de usuarios: Estudiante y Administrador. Para el estudiante debe mostrar su perfil (nombre completo, carnet universitario, carrera y foto), el catalogo de equipos disponibles (con nombre, descripcion, imagen y disponibilidad) y el boton Solicitar Prestamo que genere el registro con fecha de prestamo, fecha de devolucion 3 dias despues y el estado pasando de Pendiente a Aprobado y Devuelto. Para el administrador debe tener un panel de control para aprobar o rechazar solicitudes, ver el historial de prestamos activos, marcar equipos como devueltos y generar el reporte de equipos mas solicitados.
+
+Prompt 2:
+Crea primero el script SQL para Supabase con las tablas perfiles, equipos y prestamos relacionadas entre si. Agrega tambien una regla de negocio en el backend con una funcion y un trigger para que valide que un equipo no se pueda prestar ni aprobar si no esta disponible, que la fecha de devolucion sea mayor o igual a la de prestamo, y que cuando el estado pase a Aprobado el equipo cambie automaticamente a no disponible y cuando pase a Devuelto vuelva a estar disponible.
+
+Prompt 3:
+Ahora crea los modelos en TypeScript en Laboratorio.ts y el repositorio SupabaseLaboratorioRepository.ts aplicando el patron Repository, una clase ConfigService con patron Singleton para guardar los 3 dias de prestamo y una clase abstracta para validar que el estado del prestamo solo pueda pasar de Pendiente a Aprobado o Rechazado, y de Aprobado a Devuelto. Actualiza tambien el repositorio de autenticacion para que guarde el carnet, la carrera, la foto y el rol del usuario en la tabla perfiles.
+
+Prompt 4:
+Construye las pantallas de login, registro, la pantalla principal del estudiante con su perfil, catalogo de equipos y sus prestamos solicitados, y la pantalla de administrador con los filtros de prestamos activos, los botones para aprobar, rechazar o marcar como devuelto y la seccion del reporte de los equipos mas solicitados. En la pantalla de login agrega tambien dos botones de usuarios de prueba (uno para ingresar rapido como Estudiante con mis datos y otro para ingresar como Administrador) para poder probar ambos roles facilmente.
+
+Prompt 5:
+Revisando el sistema vi que al darle al boton de Admin deja entrar de un solo sin verificar si el usuario es administrador, y ademas cuando se registra un usuario nuevo no deberia dejarle escoger el rol sino asignarle directamente Estudiante. Corrige eso para que el panel de administrador pida tener sesion de Administrador y quita el selector de rol del registro.
+
+Prompt 6:
+En la parte de las fotos, haz que cuando un nuevo usuario se registre y no ponga link de foto le asigne una imagen generica como las de sin foto de perfil. Tambien agrega un boton en el perfil para que el usuario pueda editar su informacion o cambiar su foto ya estando dentro del sistema, y corrige la imagen del multimetro en el catalogo porque aparece sin foto.
+
+Prompt 7:
+Quita el boton de cambiar de cuenta de la barra superior porque hace lo mismo que cerrar sesion. Ademas asegurate de que los botones de los usuarios de prueba en login.tsx funcionen sin dejar contrasenas escritas en el codigo y agrega el archivo .env al .gitignore para no subir credenciales al repositorio de GitHub.

@@ -1,0 +1,28 @@
+Alumno: Erick Efrain Solorzano Jimenez
+Carne: 0907-25-79532
+Curso: Programacion II
+
+(a) Que entendi del problema y que tablas/modelos planee
+
+El problema consiste en hacer una aplicacion en React Native conectada a Supabase para administrar el prestamo de equipos de laboratorio de la universidad teniendo dos tipos de usuarios: Estudiante y Administrador.
+El usuario con rol Estudiante se puede registrar por su cuenta llenando su perfil (nombre completo, carnet universitario, carrera y su foto), puede ver y editar su informacion, ver el catalogo de equipos con su disponibilidad y pedir prestado un equipo registrando la fecha de prestamo, la fecha de devolucion (3 dias despues) y el estado que empieza en Pendiente.
+El usuario Administrador tiene un panel de control donde revisa las solicitudes de los estudiantes para aprobarlas o rechazarlas, consulta el historial de prestamos activos, marca los equipos cuando ya fueron devueltos y genera el reporte de los equipos mas solicitados. Ademas, en la pantalla de inicio de sesion se incluyeron dos usuarios de prueba de acceso rapido (uno con perfil de Estudiante y otro con perfil de Administrador) para facilitar la demostracion y prueba de ambos roles en el sistema.
+
+Para guardar la informacion planee 3 tablas en Supabase y sus modelos en el archivo Laboratorio.ts:
+1. Tabla perfiles: guarda el id del usuario, correo, nombre_completo, carnet, carrera, foto_url y el rol (Estudiante o Administrador).
+2. Tabla equipos: guarda id, nombre, descripcion, imagen_url y disponible (verdadero o falso).
+3. Tabla prestamos: guarda id, usuario_id (relacionado con el perfil del usuario), equipo_id (relacionado con el equipo), fecha_prestamo, fecha_devolucion y el estado (Pendiente, Aprobado, Rechazado o Devuelto).
+
+Tambien utilice el patron Repository (ILaboratorioRepository y SupabaseLaboratorioRepository) para separar las consultas de las pantallas, el patron Singleton (ConfigService) para definir los 3 dias de prestamo y una clase abstracta (ReglaBase) para validar el cambio de estados. Ademas puse una regla de negocio en el backend con un trigger en Supabase para que no deje prestar un equipo que no este disponible y cambie su disponibilidad automaticamente al aprobar o devolver.
+
+(b) Que partes se delegaron a la IA y por que
+
+1. El diseno de las pantallas de login (incluyendo los botones de usuarios de prueba para Estudiante y Administrador), registro, vista de estudiante y panel de administrador junto con sus estilos y modales. Lo delegue porque acomodar todos los cuadros de texto, botones y estilos en React Native toma bastante tiempo y preferi concentrarme en revisar que la logica de los prestamos y la conexion con Supabase funcionaran bien.
+2. El codigo SQL para crear las tablas, el trigger de validacion y los primeros equipos de prueba en la base de datos, para ahorrar tiempo al momento de armar las tablas en Supabase y poder empezar a probar la aplicacion mas rapido.
+
+(c) Al menos una cosa que la IA hizo mal o que tuve que corregir, y como me di cuenta
+
+1. Al principio en la pantalla de registro permitia elegir el rol de Administrador al crear una cuenta nueva y ademas habia un boton de Admin en la parte de arriba que dejaba entrar al panel de control de un solo sin haber iniciado sesion como administrador. Me di cuenta leyendo otra vez la hoja del examen donde dice que solo el Estudiante se puede auto-registrar y probando los botones en el navegador. Lo corregi quitando la opcion de elegir rol en el registro para que todos se registren como Estudiante, y validando en la pantalla de administrador que el usuario tenga rol Administrador antes de dejarlo ver el panel.
+2. Cuando el administrador aprobaba un prestamo, solo cambiaba el estado del prestamo a Aprobado pero el equipo seguia apareciendo como Disponible en el catalogo del estudiante. Me di cuenta al hacer una prueba solicitando un equipo con el usuario de prueba de estudiante y aprobandolo desde el usuario de prueba de administrador. Lo corregi haciendo que al aprobar el prestamo se actualice disponible a falso en la tabla de equipos, y que al marcarlo como Devuelto vuelva a estar disponible.
+3. En las fotos de perfil y del catalogo, si un usuario nuevo no ponia link de foto o si fallaba un enlace (como paso con la foto del multimetro que no cargaba), quedaba el espacio en blanco. Me di cuenta registrando un usuario nuevo sin foto y revisando el catalogo, asi que hice que cuando el campo de foto se deje vacio le ponga por defecto una imagen generica de usuario sin foto de perfil y agregue un boton para que el estudiante pueda editar sus datos o cambiar su foto ya estando dentro del sistema.
+4. El archivo .gitignore original no estaba ignorando el archivo .env con las llaves de Supabase y en los usuarios de prueba se habia dejado una contrasena escrita en el codigo. Me di cuenta antes de subir el proyecto a GitHub recordando la indicacion de no subir contrasenas ni credenciales al repositorio, por lo que agregue .env al .gitignore y ajuste el metodo iniciarSesionPrueba para que cargue los perfiles de prueba sin exponer contrasenas en el repositorio.
