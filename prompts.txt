@@ -1,6 +1,4 @@
-Alumno: Erick Efrain Solorzano Jimenez
-Carne: 0907-25-79532
-Curso: Programacion II
+
 
 Prompt 1:
 Ayudame a desarrollar una aplicacion en React Native con Expo Router y Supabase para un Sistema de Gestion de Equipos de Laboratorio en una universidad. Necesito manejar inicio de sesion con opcion de registrarse y dos tipos de usuarios: Estudiante y Administrador. Para el estudiante debe mostrar su perfil (nombre completo, carnet universitario, carrera y foto), el catalogo de equipos disponibles (con nombre, descripcion, imagen y disponibilidad) y el boton Solicitar Prestamo que genere el registro con fecha de prestamo, fecha de devolucion 3 dias despues y el estado pasando de Pendiente a Aprobado y Devuelto. Para el administrador debe tener un panel de control para aprobar o rechazar solicitudes, ver el historial de prestamos activos, marcar equipos como devueltos y generar el reporte de equipos mas solicitados.
